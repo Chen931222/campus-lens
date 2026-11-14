@@ -66,7 +66,7 @@ export function evaluate(courses: Course[], selected: Course[]): Verdict {
 
   const countOk = selected.length <= LIMITS.maxCourses;
   findings.push({
-    rule: "R12",
+    rule: "R21",
     ok: countOk,
     text: countOk
       ? `${selected.length} course${selected.length === 1 ? "" : "s"} selected; the limit is ${LIMITS.maxCourses} per semester.`
@@ -76,7 +76,7 @@ export function evaluate(courses: Course[], selected: Course[]): Verdict {
 
   const creditsOk = after >= LIMITS.minCreditsUndergrad;
   findings.push({
-    rule: "R13",
+    rule: "R22",
     ok: creditsOk,
     text: creditsOk
       ? `${before} → ${after} credits, at or above the ${LIMITS.minCreditsUndergrad}-credit minimum.`
@@ -90,7 +90,7 @@ export function evaluate(courses: Course[], selected: Course[]): Verdict {
   if (required.length) {
     const list = required.map((c) => `${c.name} (${c.code})`).join(", ");
     findings.push({
-      rule: "R16",
+      rule: "R24",
       ok: true,
       text: `${list} ${required.length === 1 ? "is a required course" : "are required courses"}: allowed, but you must retake ${required.length === 1 ? "it" : "them"} to graduate.`,
       safeText: `Includes a required course: allowed, but it must be retaken to graduate.`,
@@ -140,20 +140,20 @@ export function nextSteps(courses: Course[], v: Verdict): Step[] {
   if (!v.allowed) {
     const alts = allowedAlternatives(courses, v.selected).slice(0, 3);
     if (!alts.length) {
-      return [{ text: "None of these can be withdrawn without breaking a limit. Ask the department office (系辦) what you can do.", rules: ["R13"] }];
+      return [{ text: "None of these can be withdrawn without breaking a limit. Ask the department office (系辦) what you can do.", rules: ["R22"] }];
     }
     return [
-      { text: `You could withdraw ${alts.map(names).join(", or ")} instead.`, rules: ["R12", "R13"] },
+      { text: `You could withdraw ${alts.map(names).join(", or ")} instead.`, rules: ["R21", "R22"] },
       { text: "Tick the courses you choose in the table to check again before you submit.", rules: [] },
     ];
   }
   const steps: Step[] = [
-    { text: "Apply in the course system under 停修申請 before the end of week 12.", rules: ["R12"] },
-    { text: "The course instructor and then your advisor (導師) approve it, usually in 3 to 5 working days. If the instructor has not answered near the deadline, contact the department office (系辦).", rules: ["R15"] },
+    { text: "Apply in the course system under 停修申請 before the end of week 12.", rules: ["R21"] },
+    { text: "The course instructor and then your advisor (導師) approve it, usually in 3 to 5 working days. If the instructor has not answered near the deadline, contact the department office (系辦).", rules: ["R23"] },
   ];
   const required = v.selected.filter((c) => c.required);
-  if (required.length) steps.push({ text: `You will have to retake ${names(required)} to graduate. Ask the department office (系辦) whether it is offered next semester.`, rules: ["R16"] });
-  steps.push({ text: "If you have a scholarship, ask the Office of International Affairs (OIA) before you submit.", rules: ["R18"] });
-  steps.push({ text: "Once approved it cannot be undone, and fees are not refunded.", rules: ["R12", "R17"] });
+  if (required.length) steps.push({ text: `You will have to retake ${names(required)} to graduate. Ask the department office (系辦) whether it is offered next semester.`, rules: ["R24"] });
+  steps.push({ text: "If you have a scholarship, ask the Office of International Affairs (OIA) before you submit.", rules: ["R27"] });
+  steps.push({ text: "Once approved it cannot be undone, and fees are not refunded.", rules: ["R21", "R25"] });
   return steps;
 }

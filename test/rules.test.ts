@@ -30,14 +30,14 @@ describe("the question the model got wrong", () => {
     const v = evaluate(courses, coursesInText(courses, "drop 資料結構 and 計算機組織"));
     expect(v.allowed).toBe(false);
     expect(v.after).toBe(6);
-    expect(v.findings.find((f) => f.rule === "R13")!.ok).toBe(false);
+    expect(v.findings.find((f) => f.rule === "R22")!.ok).toBe(false);
     expect(verdictText(v, false)).toContain("Decision: NOT ALLOWED");
   });
 
   it("allows dropping one 3-credit course (12 → 9) but warns it is required", () => {
     const v = evaluate(courses, coursesInText(courses, "CS2031"));
     expect(v.allowed).toBe(true);
-    expect(v.findings.map((f) => f.rule)).toContain("R16");
+    expect(v.findings.map((f) => f.rule)).toContain("R24");
   });
 
   it("reads ticked boxes", () => {

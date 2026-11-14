@@ -1,79 +1,121 @@
 {
   "school": "National Yunshan University (fictional demo school)",
   "note": "Every rule here is invented for the demo. It follows the shape of typical Taiwanese university regulations but belongs to no real school.",
-  "builtFrom": "demo/rules-zh.md",
+  "builtFrom": "demo/rules-zh.md, by the cloud model in demo/build-kb.html (2026-11-14), every rule checked against its quoted source and reviewed by the developer (demo; a real deployment needs school staff). R21 edited in review: the model left out that an approved withdrawal cannot be undone.",
   "rules": [
     {
-      "id": "R12",
+      "id": "R20",
+      "zh": "加退選",
+      "title": "Course Adding and Dropping",
+      "text": "Students may add or drop courses during the add-drop period after course enrollment. The add-drop period will be announced by the Office of Academic Affairs in the academic calendar each semester.",
+      "source": "學生選課後，得於加退選期間內辦理加選或退選。加退選期間由教務處於每學期行事曆公告。",
+      "reviewed": true,
+      "editedByReviewer": false
+    },
+    {
+      "id": "R21",
       "zh": "停修",
-      "title": "Course withdrawal",
-      "text": "After the add/drop period you may withdraw from a course until the end of week 12. Apply in the course system under 停修申請. At most 2 courses per semester. A withdrawn course shows W on the transcript and does not count toward GPA. Withdrawal cannot be undone."
+      "title": "Course Withdrawal",
+      "text": "Students may apply to withdraw from courses after the add-drop period, no later than 5:00 PM on Friday of the 12th week of the semester via the Course Withdrawal function in the course system, and late applications will not be accepted. Each semester is limited to a maximum of two withdrawn courses. Withdrawn courses will be recorded as 'W' on the transcript and will not be included in the semester grade point average calculation. Once approved, a withdrawal takes effect and cannot be undone.",
+      "source": "學生於加退選期間結束後，得申請停修課程，至遲應於學期第十二週週五下午五時前，於選課系統「停修申請」功能提出，逾期不予受理。每學期停修科目以二科為限。停修之科目於成績單登錄「W」，不列入學期學業平均成績計算。停修申請經核准後即生效，不得撤回。",
+      "reviewed": true,
+      "editedByReviewer": true
     },
     {
-      "id": "R13",
-      "zh": "最低學分",
-      "title": "Minimum credits",
-      "text": "Undergraduates must keep at least 9 credits after withdrawal; graduate students at least 1 course. International students on a student residence permit must stay enrolled full time; dropping below the minimum must be reported to the Office of International Affairs (OIA) within 7 days."
+      "id": "R22",
+      "zh": "修習學分",
+      "title": "Minimum Credits After Withdrawal",
+      "text": "After course withdrawal, undergraduate students must not take fewer than nine credits, and graduate students must take at least one course. Foreign students holding a student residence certificate must maintain full-time study, and those whose credit count falls below the aforementioned regulations after withdrawal must notify the Office of International Affairs within seven days.",
+      "source": "學生停修後之修習總學分，大學部學生不得少於九學分，研究所學生至少應修習一科。持學生居留證之外國學生應維持全時修讀；停修後學分數低於前項規定者，應於七日內通知國際事務處。",
+      "reviewed": true,
+      "editedByReviewer": false
     },
     {
-      "id": "R14",
-      "zh": "二一",
-      "title": "Half-credit failure rule",
-      "text": "An undergraduate who fails more than half of the credits taken in each of two semesters is dismissed. Withdrawn courses (W) are not counted as failed credits."
+      "id": "R23",
+      "zh": "審核程序",
+      "title": "Withdrawal Approval Process",
+      "text": "Withdrawal applications must be signed sequentially by the course instructor and advisor, and the system will automatically submit them, which usually takes three to five working days. If the course instructor fails to sign before the deadline, the student should contact the department office.",
+      "source": "停修申請應經授課教師及導師依序簽核，系統將自動送出，通常需三至五個工作天。授課教師逾期未簽核者，學生應洽系辦公室。",
+      "reviewed": true,
+      "editedByReviewer": false
     },
     {
-      "id": "R15",
-      "zh": "導師／授課教師簽核",
-      "title": "Approvals",
-      "text": "A withdrawal request needs approval from the course instructor and then your academic advisor (導師). The system sends the request automatically; approval usually takes 3 to 5 working days. If the instructor does not respond before the week 12 deadline, contact the department office (系辦)."
+      "id": "R24",
+      "zh": "必修停修",
+      "title": "Required Course Withdrawal",
+      "text": "Required courses may be applied for withdrawal, but students must still retake and pass them in the future in order to graduate. Students should check with the department office whether the course will be offered in the following semester.",
+      "source": "必修科目得申請停修，惟仍須於日後重修及格始得畢業。學生應向系辦公室確認該科目下學期是否開設。",
+      "reviewed": true,
+      "editedByReviewer": false
     },
     {
-      "id": "R16",
-      "zh": "必修",
-      "title": "Required courses",
-      "text": "You may withdraw from a required course (必修), but you must retake it later to graduate. Check with the department office whether it is offered next semester."
-    },
-    {
-      "id": "R17",
+      "id": "R25",
       "zh": "學分費",
-      "title": "Fees after withdrawal",
-      "text": "Tuition and credit fees (學分費) are not refunded for withdrawn courses."
+      "title": "Tuition and Fees for Withdrawal",
+      "text": "The credit fees and miscellaneous fees for withdrawn courses will not be refunded under any circumstances.",
+      "source": "停修科目之學分費及學雜費，概不退還。",
+      "reviewed": true,
+      "editedByReviewer": false
     },
     {
-      "id": "R18",
+      "id": "R26",
+      "zh": "二一退學",
+      "title": "Academic Dismissal",
+      "text": "Undergraduate students whose failed credits exceed one-half of the total credits taken in each of two consecutive semesters shall be dismissed from the university. Withdrawn courses are not counted toward the failed credits.",
+      "source": "大學部學生連續兩學期，其不及格學分數均超過該學期修習學分總數二分之一者，應令退學。停修科目不列入不及格學分數計算。",
+      "reviewed": true,
+      "editedByReviewer": false
+    },
+    {
+      "id": "R27",
       "zh": "獎學金",
-      "title": "Scholarships and withdrawal",
-      "text": "Some scholarships require a minimum number of completed credits per semester. Withdrawal can make you lose eligibility. International students on the Taiwan Scholarship or a school scholarship should ask OIA before withdrawing."
+      "title": "Scholarship Impact",
+      "text": "Some scholarships have regulations regarding the number of credits completed each semester, and withdrawal may affect scholarship eligibility. Foreign students receiving the Taiwan Scholarship or the university scholarship should consult the Office of International Affairs before withdrawing.",
+      "source": "部分獎學金設有每學期修畢學分數之規定，停修可能影響受獎資格。領有臺灣獎學金或本校獎學金之外國學生，於停修前應先洽詢國際事務處。",
+      "reviewed": true,
+      "editedByReviewer": false
     },
     {
-      "id": "R19",
+      "id": "R28",
       "zh": "停修原因",
-      "title": "Reason field",
-      "text": "The reason field is free text and is read by the instructor and advisor. A short honest reason is enough, for example workload or schedule conflict. Medical reasons do not need a certificate for withdrawal."
+      "title": "Reason for Withdrawal",
+      "text": "The reason for withdrawal field is to be filled out freely, and both the course instructor and advisor can view it; just provide a brief and honest explanation, such as heavy workload or schedule conflict. Those withdrawing due to physical factors do not need to attach a medical diagnosis certificate.",
+      "source": "停修原因欄為自由填寫，授課教師及導師均可閱覽，簡要誠實說明即可，例如課業負擔或衝堂。因身體因素停修者，無須檢附診斷證明。",
+      "reviewed": true,
+      "editedByReviewer": false
+    },
+    {
+      "id": "R29",
+      "zh": "請假申請",
+      "title": "Leave of Absence Application",
+      "text": "Students who need to take leave for any reason must submit a leave application through the course system, and medical leave of three days or more must be accompanied by medical documentation.",
+      "source": "學生因故須請假者，應於選課系統「請假申請」提出，病假三日以上應檢附醫療證明。",
+      "reviewed": true,
+      "editedByReviewer": false
     }
   ],
   "fieldRules": {
-    "_note": "Which rules matter for which field on 停修申請. Written by hand from the rules; the model is told only these.",
+    "_note": "Which rules matter for which field on 停修申請. Written by hand; the model is told only these.",
     "course": [
-      "R12",
-      "R13",
-      "R14",
-      "R16"
+      "R21",
+      "R22",
+      "R26",
+      "R24"
     ],
     "reasonType": [
-      "R19"
+      "R28"
     ],
     "reason": [
-      "R19",
-      "R15"
+      "R28",
+      "R23"
     ],
     "scholar": [
-      "R18"
+      "R27"
     ],
     "phone": [],
     "ack": [
-      "R12",
-      "R17"
+      "R21",
+      "R25"
     ]
   }
 }

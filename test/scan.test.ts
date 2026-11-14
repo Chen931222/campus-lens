@@ -46,21 +46,21 @@ describe("redact", () => {
 describe("model output guards", () => {
   it("drops notes for unknown fields and rule ids that do not exist", () => {
     const notes = parseNotes(JSON.stringify({ notes: [
-      { key: "reason", note: "Free text.", rules: ["R19", "R99"] },
+      { key: "reason", note: "Free text.", rules: ["R28", "R99"] },
       { key: "made-up", note: "x", rules: [] },
     ] }), ["reason"]);
-    expect(notes).toEqual([{ key: "reason", note: "Free text.", rules: ["R19"] }]);
+    expect(notes).toEqual([{ key: "reason", note: "Free text.", rules: ["R28"] }]);
   });
 
   it("reads the markdown list the on-device model sometimes returns instead of JSON", () => {
-    const raw = "Here are the notes:\n\n- **course**:  Select the course. (rules: R16)\n- **phone**: Contact number. (rules: R13)\n- **nope**: x";
+    const raw = "Here are the notes:\n\n- **course**:  Select the course. (rules: R24)\n- **phone**: Contact number. (rules: R22)\n- **nope**: x";
     expect(parseNotes(raw, ["course", "phone"])).toEqual([
-      { key: "course", note: "Select the course.", rules: ["R16"] },
-      { key: "phone", note: "Contact number.", rules: ["R13"] },
+      { key: "course", note: "Select the course.", rules: ["R24"] },
+      { key: "phone", note: "Contact number.", rules: ["R22"] },
     ]);
   });
 
   it("flags citations that are not in the knowledge base", () => {
-    expect(unknownCitations("See [R12] and [R40].")).toEqual(["R40"]);
+    expect(unknownCitations("See [R21] and [R40].")).toEqual(["R40"]);
   });
 });

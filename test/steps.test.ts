@@ -25,13 +25,29 @@ describe("next steps are built by code", () => {
 
   it("for an allowed request, lists submit, approval, scholarship and no-undo steps", () => {
     const steps = nextSteps(courses, evaluate(courses, pick("GE1120")));
-    expect(steps.flatMap((s) => s.rules)).toEqual(expect.arrayContaining(["R12", "R15", "R18", "R17"]));
-    expect(steps.some((s) => s.rules.includes("R16"))).toBe(false);
+    expect(steps.flatMap((s) => s.rules)).toEqual(expect.arrayContaining(["R21", "R23", "R27", "R25"]));
+    expect(steps.some((s) => s.rules.includes("R24"))).toBe(false);
   });
 
   it("every suggested alternative is itself allowed", () => {
     for (const sel of [pick("CS2031", "CS2105"), pick("GE1120", "LA1003", "PE2001"), pick("CS2031", "LA1003", "GE1120")]) {
       for (const alt of allowedAlternatives(courses, sel)) expect(evaluate(courses, alt).allowed).toBe(true);
     }
+  });
+});
+
+import kb from "../src/kb/yunshan.json";
+
+describe("rule ids used by code exist in the rule base", () => {
+  const ids = new Set(kb.rules.map((r) => r.id));
+  const courses = readCourses(loadDemo());
+  it("every finding and step cites a real rule", () => {
+    for (const codes of [["GE1120"], ["CS2031", "CS2105"], ["GE1120", "LA1003", "PE2001"], ["PE2001"]]) {
+      const v = evaluate(courses, courses.filter((c) => codes.includes(c.code)));
+      for (const id of [...v.findings.map((f) => f.rule), ...nextSteps(courses, v).flatMap((s) => s.rules)]) expect(ids.has(id)).toBe(true);
+    }
+  });
+  it("every field's rules exist", () => {
+    for (const [k, v] of Object.entries(kb.fieldRules)) if (Array.isArray(v)) for (const id of v) expect(ids.has(id), `${k}: ${id}`).toBe(true);
   });
 });

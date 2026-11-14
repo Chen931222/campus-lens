@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rule Builder</title>
+<style>
+  body { margin: 0; font: 15px/1.55 Georgia, "Times New Roman", serif; color: #1c1a17; background: #f4f1ea; }
+  main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .sub { margin: 0 0 16px; color: #5f574a; }
+  details { margin-bottom: 12px; }
+  pre { white-space: pre-wrap; background: #fff; border: 1px solid #c9bfa8; padding: 8px 12px; font: 13px/1.6 "Microsoft JhengHei", sans-serif; }
+  button { font: inherit; padding: 6px 14px; background: #1c1a17; color: #f4f1ea; border: 0; cursor: pointer; }
+  button:disabled { opacity: 0.6; cursor: progress; }
+  #status { color: #5f574a; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; background: #fff; }
+  th, td { border: 1px solid #c9bfa8; padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: #ece6d8; }
+  tr.bad td { color: #8a2d1c; }
+  tr.ok td { background: #f3f7f1; }
+  td.zh { white-space: pre-wrap; font-family: "Microsoft JhengHei", sans-serif; font-size: 13px; width: 34%; }
+  textarea { width: 100%; box-sizing: border-box; font: inherit; border: 1px solid #c9bfa8; padding: 4px; }
+  td:first-child { font-family: ui-monospace, Consolas, monospace; white-space: nowrap; }
+  @media (max-width: 700px) { table { font-size: 13px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Rule Builder</h1>
+  <p class="sub">Run once per school, in the cloud. Turns the public Chinese regulations into short English rules. Every rule must quote its source, and every number must be in that quote, or it is not published.</p>
+  <details><summary>Source: 國立雲杉大學學則 (fictional)</summary><pre id="source"></pre></details>
+  <p><button id="build" type="button">Build the English rules</button></p>
+  <p id="status"></p>
+  <p><span id="publish-status"></span> <a id="download" download="rules.json" hidden>Download approved rules</a></p>
+  <table id="rules"><thead><tr><th>Id</th><th>Chinese source</th><th>English rule (editable)</th><th>Review</th></tr></thead><tbody></tbody></table>
+</main>
+<script type="module" src="../src/kb/page.ts"></script>
+</body>
+</html>

@@ -38,10 +38,10 @@ describe("ground", () => {
 describe("prompts", () => {
   it("gives each field only its own rules", () => {
     expect(rulesForField("phone")).toEqual([]);
-    expect(rulesForField("scholar")).toEqual(["R18"]);
+    expect(rulesForField("scholar")).toEqual(["R27"]);
     const p = notesPrompt("PAGE", ["phone", "scholar"]);
     expect(p).toContain("FIELD phone\n(no school rule");
-    expect(p).toContain("FIELD scholar\n[R18]");
+    expect(p).toContain("FIELD scholar\n[R27]");
   });
 
   it("with a verdict, asks only for next steps and never for the decision", () => {
