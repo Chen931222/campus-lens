@@ -5,3 +5,8 @@ dist
 !.env.example
 .appcheck-debug-token.txt
 dist-ext
+.vercel
+
+.vercel
+.env*
+!.env.example

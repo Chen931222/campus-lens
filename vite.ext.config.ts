@@ -26,7 +26,8 @@ export default defineConfig({
         const bundle = readFileSync(resolve(import.meta.dirname, "dist-ext/content.js"), "utf8");
         const tokenFile = resolve(import.meta.dirname, ".appcheck-debug-token.txt");
         const token = existsSync(tokenFile) ? readFileSync(tokenFile, "utf8").trim() : "";
-        if (bundle.includes("FIREBASE_APPCHECK_DEBUG_TOKEN") || (token && bundle.includes(token))) {
+        // The Firebase SDK itself reads this global (that is fine); our code setting it is not.
+        if (/FIREBASE_APPCHECK_DEBUG_TOKEN\s*=[^=]/.test(bundle) || (token && bundle.includes(token))) {
           throw new Error("dist-ext/content.js contains App Check debug code or the debug token. Refusing to build.");
         }
       },
