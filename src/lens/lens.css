@@ -1,0 +1,45 @@
+/* Campus Lens overlay. Marginalia, not a chatbot: notes sit beside the fields they explain. */
+.cl-panel, .cl-note { --cl-ink: #1c1a17; --cl-paper: #faf6ec; --cl-rule: #c9bfa8; --cl-mark: #8a2d1c; --cl-muted: #5f574a;
+  font: 14px/1.5 Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--cl-ink); }
+
+.cl-note { grid-column: 1 / -1; margin: 4px 0 8px; padding: 8px 12px; background: var(--cl-paper);
+  border-left: 3px solid var(--cl-mark); max-width: 62ch; }
+.cl-note-text { margin: 0; }
+.cl-refs { margin: 4px 0 0; display: flex; gap: 4px; flex-wrap: wrap; }
+.cl-ref { font: 12px/1 ui-monospace, Consolas, monospace; padding: 3px 6px; border: 1px solid var(--cl-rule);
+  background: transparent; color: var(--cl-mark); cursor: pointer; }
+.cl-ref:hover, .cl-ref:focus-visible { background: #f0e7d3; outline: none; }
+
+.cl-panel { position: fixed; right: 16px; bottom: 16px; width: min(360px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
+  overflow: auto; background: var(--cl-paper); border: 1px solid var(--cl-rule); padding: 12px 16px; z-index: 2147483000;
+  box-shadow: 0 1px 0 var(--cl-rule); }
+.cl-head { display: flex; flex-direction: column; border-bottom: 1px solid var(--cl-rule); padding-bottom: 6px; margin-bottom: 8px; }
+.cl-head strong { font-size: 17px; letter-spacing: 0.02em; }
+.cl-school { font-size: 12px; color: var(--cl-muted); }
+.cl-status, .cl-source { font-size: 12px; color: var(--cl-muted); margin: 6px 0; }
+.cl-start { width: 100%; font: inherit; padding: 6px 10px; background: var(--cl-ink); color: var(--cl-paper); border: 0; cursor: pointer; }
+.cl-start:disabled { opacity: 0.6; cursor: progress; }
+.cl-ask { display: flex; gap: 6px; margin-top: 10px; }
+.cl-ask input { flex: 1; min-width: 0; font: inherit; padding: 4px 6px; border: 1px solid var(--cl-rule); background: #fff; }
+.cl-ask button { font: inherit; padding: 4px 10px; border: 1px solid var(--cl-ink); background: transparent; cursor: pointer; }
+.cl-answer p { margin: 8px 0 0; }
+.cl-rule-head { font-weight: bold; }
+.cl-warn { color: var(--cl-mark); font-size: 12px; }
+
+/* Verdict: computed by code. Typeset like a stamped ruling, so it reads apart from the model's prose. */
+.cl-verdict { --cl-ink: #1c1a17; --cl-mark: #8a2d1c; --cl-rule: #c9bfa8;
+  font: 14px/1.5 Georgia, "Times New Roman", serif; color: var(--cl-ink);
+  border: 1px solid var(--cl-rule); border-left-width: 4px; padding: 6px 10px; margin: 8px 0; background: #fff; }
+.cl-verdict.is-no { border-left-color: var(--cl-mark); }
+.cl-verdict.is-ok { border-left-color: #2f5d3a; }
+.cl-verdict-head { margin: 0; font-weight: bold; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; }
+.cl-verdict.is-no .cl-verdict-head { color: var(--cl-mark); }
+.cl-verdict ul { margin: 4px 0; padding-left: 0; list-style: none; }
+.cl-verdict li { margin: 2px 0; }
+.cl-verdict li.is-fail { font-weight: bold; }
+.cl-verdict-rule { font: 12px ui-monospace, Consolas, monospace; color: var(--cl-mark); }
+.cl-verdict-foot { margin: 4px 0 0; font-size: 12px; color: #5f574a; }
+.cl-next-head { margin: 10px 0 0; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: #5f574a; }
+.cl-steps ol { margin: 4px 0 0; padding-left: 20px; }
+.cl-steps li { margin: 4px 0; }
+.cl-check { font: 14px/1.5 Georgia, "Times New Roman", serif; }

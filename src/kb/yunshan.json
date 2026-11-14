@@ -1,0 +1,79 @@
+{
+  "school": "National Yunshan University (fictional demo school)",
+  "note": "Every rule here is invented for the demo. It follows the shape of typical Taiwanese university regulations but belongs to no real school.",
+  "builtFrom": "demo/rules-zh.md",
+  "rules": [
+    {
+      "id": "R12",
+      "zh": "停修",
+      "title": "Course withdrawal",
+      "text": "After the add/drop period you may withdraw from a course until the end of week 12. Apply in the course system under 停修申請. At most 2 courses per semester. A withdrawn course shows W on the transcript and does not count toward GPA. Withdrawal cannot be undone."
+    },
+    {
+      "id": "R13",
+      "zh": "最低學分",
+      "title": "Minimum credits",
+      "text": "Undergraduates must keep at least 9 credits after withdrawal; graduate students at least 1 course. International students on a student residence permit must stay enrolled full time; dropping below the minimum must be reported to the Office of International Affairs (OIA) within 7 days."
+    },
+    {
+      "id": "R14",
+      "zh": "二一",
+      "title": "Half-credit failure rule",
+      "text": "An undergraduate who fails more than half of the credits taken in each of two semesters is dismissed. Withdrawn courses (W) are not counted as failed credits."
+    },
+    {
+      "id": "R15",
+      "zh": "導師／授課教師簽核",
+      "title": "Approvals",
+      "text": "A withdrawal request needs approval from the course instructor and then your academic advisor (導師). The system sends the request automatically; approval usually takes 3 to 5 working days. If the instructor does not respond before the week 12 deadline, contact the department office (系辦)."
+    },
+    {
+      "id": "R16",
+      "zh": "必修",
+      "title": "Required courses",
+      "text": "You may withdraw from a required course (必修), but you must retake it later to graduate. Check with the department office whether it is offered next semester."
+    },
+    {
+      "id": "R17",
+      "zh": "學分費",
+      "title": "Fees after withdrawal",
+      "text": "Tuition and credit fees (學分費) are not refunded for withdrawn courses."
+    },
+    {
+      "id": "R18",
+      "zh": "獎學金",
+      "title": "Scholarships and withdrawal",
+      "text": "Some scholarships require a minimum number of completed credits per semester. Withdrawal can make you lose eligibility. International students on the Taiwan Scholarship or a school scholarship should ask OIA before withdrawing."
+    },
+    {
+      "id": "R19",
+      "zh": "停修原因",
+      "title": "Reason field",
+      "text": "The reason field is free text and is read by the instructor and advisor. A short honest reason is enough, for example workload or schedule conflict. Medical reasons do not need a certificate for withdrawal."
+    }
+  ],
+  "fieldRules": {
+    "_note": "Which rules matter for which field on 停修申請. Written by hand from the rules; the model is told only these.",
+    "course": [
+      "R12",
+      "R13",
+      "R14",
+      "R16"
+    ],
+    "reasonType": [
+      "R19"
+    ],
+    "reason": [
+      "R19",
+      "R15"
+    ],
+    "scholar": [
+      "R18"
+    ],
+    "phone": [],
+    "ack": [
+      "R12",
+      "R17"
+    ]
+  }
+}

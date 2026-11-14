@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>停修申請 - 國立雲杉大學 校務系統（虛構示範）</title>
+<link rel="stylesheet" href="./school.css">
+</head>
+<body>
+<div class="fiction">示範用虛構學校，非真實校務系統。Fictional demo school, not a real university system.</div>
+<header class="sch-head">
+  <div class="sch-name">國立雲杉大學 校務行政系統</div>
+  <div class="sch-user">學號：<span data-personal>B11203047</span>　姓名：<span data-personal>阮氏蘭</span>　<a href="#">登出</a></div>
+</header>
+<nav class="sch-nav"><a href="#">選課系統</a> › <a href="#">加退選</a> › <b>停修申請</b></nav>
+
+<main class="sch-main">
+  <h1>115學年度第1學期 停修申請</h1>
+  <div class="notice">
+    <b>注意事項</b>
+    <ol>
+      <li>停修申請期間：加退選結束後至第12週週五17:00止，逾期不受理。</li>
+      <li>每學期停修以2科為限，停修後修習總學分不得少於9學分（研究生至少1科）。</li>
+      <li>停修科目成績單登錄「W」，不計入學期平均，學分費不予退還。</li>
+      <li>申請送出後需經授課教師及導師簽核，簽核完成即生效，不得撤回。</li>
+      <li>外籍生停修後學分低於規定者，請於7日內告知國際事務處。</li>
+    </ol>
+  </div>
+
+  <section class="card">
+    <h2>本學期修課明細</h2>
+    <table class="courses">
+      <thead><tr><th>選</th><th>課號</th><th>科目名稱</th><th>學分</th><th>必/選</th><th>授課教師</th></tr></thead>
+      <tbody>
+        <tr><td><input type="checkbox" name="course" value="CS2031"></td><td>CS2031</td><td>資料結構</td><td>3</td><td>必</td><td>林志明</td></tr>
+        <tr><td><input type="checkbox" name="course" value="CS2105"></td><td>CS2105</td><td>計算機組織</td><td>3</td><td>必</td><td>王美華</td></tr>
+        <tr><td><input type="checkbox" name="course" value="GE1120"></td><td>GE1120</td><td>通識：台灣歷史與文化</td><td>2</td><td>選</td><td>陳建宏</td></tr>
+        <tr><td><input type="checkbox" name="course" value="LA1003"></td><td>LA1003</td><td>華語（三）</td><td>3</td><td>選</td><td>張雅婷</td></tr>
+        <tr><td><input type="checkbox" name="course" value="PE2001"></td><td>PE2001</td><td>體育：羽球</td><td>1</td><td>必</td><td>李國強</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="3">目前修習總學分</td><td data-personal>12</td><td colspan="2"></td></tr></tfoot>
+    </table>
+  </section>
+
+  <section class="card form">
+    <h2>申請資料</h2>
+    <label class="row"><span class="lbl">停修原因</span>
+      <select name="reasonType">
+        <option value="">請選擇</option>
+        <option>課業負擔過重</option>
+        <option>衝堂</option>
+        <option>身體因素</option>
+        <option>其他</option>
+      </select>
+    </label>
+    <label class="row"><span class="lbl">原因說明</span><textarea name="reason" rows="3" placeholder="請簡述停修原因（授課教師及導師可見）"></textarea></label>
+    <label class="row"><span class="lbl">是否領有獎學金</span>
+      <span><label><input type="radio" name="scholar" value="Y"> 是</label>　<label><input type="radio" name="scholar" value="N"> 否</label></span>
+    </label>
+    <label class="row"><span class="lbl">聯絡電話</span><input name="phone" type="tel" value="0912-345-678" data-personal></label>
+    <label class="row check"><input type="checkbox" name="ack"> <span>本人已詳閱注意事項，了解停修後不得撤回且學分費不予退還。</span></label>
+    <div class="btns"><button type="button">暫存</button><button type="button" class="primary">送出申請</button></div>
+  </section>
+</main>
+<script type="module" src="../src/lens/main.ts"></script>
+</body>
+</html>
