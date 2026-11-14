@@ -1,7 +1,7 @@
 import { askPage, deviceStatus, warmUp, type Source } from "./ai";
 import { askPrompt, notesPrompt, notesSchema, parseNotes, rulesForField, rulesText, unknownCitations, type Note } from "./prompts";
 import { ground } from "./guard";
-import { coursesInText, evaluate, nextSteps, readCourses, tickedCourses, type Course, type Verdict } from "./rules";
+import { asksPermission, coursesInText, evaluate, nextSteps, readCourses, tickedCourses, type Course, type Verdict } from "./rules";
 import { contextText, scanPage, scanRedacted } from "./scan";
 import kb from "../kb/yunshan.json";
 import "./lens.css";
@@ -133,7 +133,7 @@ function build(): void {
       const ctx = scanPage();
       const courses = readCourses();
       const named = coursesInText(courses, q);
-      const selected = named.length ? named : tickedCourses(courses);
+      const selected = named.length ? named : asksPermission(q) ? tickedCourses(courses) : [];
       const verdict = selected.length ? evaluate(courses, selected) : null;
       if (verdict) {
         // Decision, reasons and next steps all come from code. No model call, nothing to get wrong.
@@ -205,4 +205,36 @@ function verdictBox(v: Verdict): HTMLElement {
   return box;
 }
 
-build();
+/** True on a page this rule base was written for. Other pages get a plain "not supported" note. */
+export function isSupportedPage(doc: Document = document): boolean {
+  return (doc.querySelector(".sch-name")?.textContent ?? "").includes("國立雲杉大學") && !!doc.querySelector(".form, .courses");
+}
+
+/** Adds the panel once, however many times the extension icon is clicked. */
+export function mount(): void {
+  const w = window as unknown as { __campusLens?: boolean };
+  if (w.__campusLens) {
+    document.querySelector<HTMLElement>(".cl-panel")?.scrollIntoView({ block: "end" });
+    return;
+  }
+  w.__campusLens = true;
+  if (isSupportedPage()) {
+    build();
+    return;
+  }
+  const note = el("section", "cl-panel");
+  note.setAttribute("aria-label", "Campus Lens");
+  const close = el("button", "cl-ask-close", "Close");
+  close.type = "button";
+  close.addEventListener("click", () => {
+    note.remove();
+    w.__campusLens = false;
+  });
+  note.append(
+    el("strong", undefined, "Campus Lens"),
+    el("p", "cl-status", "This page is not one Campus Lens has rules for yet. It only reads pages from schools whose regulations have been built and reviewed."),
+    close,
+  );
+  document.body.append(note);
+}
+

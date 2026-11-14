@@ -4,3 +4,4 @@ dist
 .env.*
 !.env.example
 .appcheck-debug-token.txt
+dist-ext

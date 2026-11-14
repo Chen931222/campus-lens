@@ -51,3 +51,15 @@ describe("rule ids used by code exist in the rule base", () => {
     for (const [k, v] of Object.entries(kb.fieldRules)) if (Array.isArray(v)) for (const id of v) expect(ids.has(id), `${k}: ${id}`).toBe(true);
   });
 });
+
+import { asksPermission } from "../src/lens/rules";
+
+describe("asksPermission", () => {
+  it("checks the ticked courses only for can-I questions", () => {
+    expect(asksPermission("Can I withdraw from the ticked course?")).toBe(true);
+    expect(asksPermission("Am I allowed to drop these?")).toBe(true);
+    expect(asksPermission("Do I get my fees back if I withdraw?")).toBe(false);
+    expect(asksPermission("What is the deadline to withdraw?")).toBe(false);
+    expect(asksPermission("What is 二一?")).toBe(false);
+  });
+});

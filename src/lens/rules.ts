@@ -157,3 +157,13 @@ export function nextSteps(courses: Course[], v: Verdict): Step[] {
   steps.push({ text: "Once approved it cannot be undone, and fees are not refunded.", rules: ["R21", "R25"] });
   return steps;
 }
+
+/**
+ * Whether a question asks if withdrawing is allowed, so the ticked courses should be checked.
+ * "Do I get my fees back if I withdraw?" is about fees, not permission, and goes to the model.
+ */
+export function asksPermission(question: string): boolean {
+  const q = question.toLowerCase();
+  if (/\b(fee|fees|refund|money|deadline|when|how long|what is|what's|who)\b/.test(q)) return false;
+  return /\b(can|could|may|allowed|ok|okay|possible|able)\b/.test(q) && /\b(drop|withdraw|quit|stop|these|this|them|it)\b/.test(q);
+}

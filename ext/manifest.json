@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Campus Lens",
+  "version": "0.1.0",
+  "description": "English margin notes for Chinese-only university admin pages. Reads the page on your device; the cloud never sees your personal data.",
+  "permissions": ["activeTab", "scripting"],
+  "action": { "default_title": "Explain this page in English" },
+  "background": { "service_worker": "background.js" },
+  "minimum_chrome_version": "139"
+}
