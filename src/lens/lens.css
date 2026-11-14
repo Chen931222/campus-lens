@@ -1,45 +1,135 @@
-/* Campus Lens overlay. Marginalia, not a chatbot: notes sit beside the fields they explain. */
-.cl-panel, .cl-note { --cl-ink: #1c1a17; --cl-paper: #faf6ec; --cl-rule: #c9bfa8; --cl-mark: #8a2d1c; --cl-muted: #5f574a;
-  font: 14px/1.5 Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--cl-ink); }
+/*
+ * Campus Lens overlay. An annotation layer laid over someone else's page: notes are pinned to the
+ * fields they explain, the panel is a quiet tool. Restrained palette, chosen to read apart from the
+ * school's institutional blue: white paper, near-black ink, one vermilion annotation mark.
+ */
+.cl-panel, .cl-note, .cl-check, .cl-verdict, .cl-steps {
+  --cl-ink: #17191c;
+  --cl-muted: #50565e;
+  --cl-surface: #ffffff;
+  --cl-layer: #f2f3f5;
+  --cl-rule: #d3d7dc;
+  --cl-mark: #b0341c;
+  --cl-mark-tint: #fbeeea;
+  --cl-ok: #2a6a3c;
+  --cl-ok-tint: #ecf5ef;
+  --cl-shadow: 0 10px 28px rgba(23, 25, 28, 0.16), 0 2px 6px rgba(23, 25, 28, 0.08);
+  font: 14px/1.5 system-ui, "Segoe UI", "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+  color: var(--cl-ink);
+  font-variant-numeric: tabular-nums;
+}
+.cl-panel ::selection, .cl-note ::selection, .cl-check ::selection { background: #f3c9bf; color: var(--cl-ink); }
 
-.cl-note { grid-column: 1 / -1; margin: 4px 0 8px; padding: 8px 12px; background: var(--cl-paper);
-  border-left: 3px solid var(--cl-mark); max-width: 62ch; }
+/* Shared controls */
+.cl-panel button, .cl-note button, .cl-check button { font: inherit; cursor: pointer; }
+.cl-panel :focus-visible, .cl-note :focus-visible, .cl-check :focus-visible {
+  outline: 2px solid var(--cl-mark); outline-offset: 2px;
+}
+
+/* Margin note: pinned to its field by a small notch pointing up at it. */
+.cl-note {
+  position: relative; grid-column: 1 / -1; max-width: 62ch; margin: 10px 0 10px; padding: 8px 12px;
+  background: var(--cl-surface); border: 1px solid var(--cl-rule); border-radius: 4px;
+}
+.cl-note::before, .cl-note::after {
+  content: ""; position: absolute; left: 18px; width: 0; height: 0; border: 6px solid transparent; border-top: 0;
+}
+.cl-note::before { top: -7px; border-bottom: 7px solid var(--cl-rule); }
+.cl-note::after { top: -6px; border-bottom: 7px solid var(--cl-surface); }
 .cl-note-text { margin: 0; }
-.cl-refs { margin: 4px 0 0; display: flex; gap: 4px; flex-wrap: wrap; }
-.cl-ref { font: 12px/1 ui-monospace, Consolas, monospace; padding: 3px 6px; border: 1px solid var(--cl-rule);
-  background: transparent; color: var(--cl-mark); cursor: pointer; }
-.cl-ref:hover, .cl-ref:focus-visible { background: #f0e7d3; outline: none; }
+.cl-refs { margin: 6px 0 0; display: flex; gap: 6px; flex-wrap: wrap; }
 
-.cl-panel { position: fixed; right: 16px; bottom: 16px; width: min(360px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
-  overflow: auto; background: var(--cl-paper); border: 1px solid var(--cl-rule); padding: 12px 16px; z-index: 2147483000;
-  box-shadow: 0 1px 0 var(--cl-rule); }
-.cl-head { display: flex; flex-direction: column; border-bottom: 1px solid var(--cl-rule); padding-bottom: 6px; margin-bottom: 8px; }
-.cl-head strong { font-size: 17px; letter-spacing: 0.02em; }
-.cl-school { font-size: 12px; color: var(--cl-muted); }
-.cl-status, .cl-source { font-size: 12px; color: var(--cl-muted); margin: 6px 0; }
-.cl-start { width: 100%; font: inherit; padding: 6px 10px; background: var(--cl-ink); color: var(--cl-paper); border: 0; cursor: pointer; }
-.cl-start:disabled { opacity: 0.6; cursor: progress; }
+/* Rule reference: an identifier, set as a small tabular label, opens the rule text. */
+.cl-ref {
+  font: 600 12px/1 system-ui, "Segoe UI", sans-serif; letter-spacing: 0.02em; padding: 4px 7px;
+  border: 1px solid var(--cl-rule); border-radius: 3px; background: var(--cl-surface); color: var(--cl-mark);
+}
+.cl-ref:hover { background: var(--cl-mark-tint); border-color: #e2b4a8; }
+
+/* Panel */
+.cl-panel {
+  position: fixed; right: 16px; bottom: 16px; z-index: 2147483000; width: min(380px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px); display: flex; flex-direction: column;
+  background: var(--cl-surface); border: 1px solid var(--cl-rule); border-radius: 6px; box-shadow: var(--cl-shadow);
+}
+.cl-head {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--cl-layer);
+  border-bottom: 1px solid var(--cl-rule); border-radius: 6px 6px 0 0;
+}
+.cl-title { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.cl-title strong { font-size: 15px; font-weight: 650; }
+.cl-school { font-size: 12px; color: var(--cl-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-toggle {
+  padding: 4px 10px; border: 1px solid var(--cl-rule); border-radius: 4px; background: var(--cl-surface); color: var(--cl-ink);
+  font-size: 13px;
+}
+.cl-toggle:hover { border-color: var(--cl-muted); }
+.cl-body { padding: 12px 14px 14px; overflow: auto; }
+.cl-panel.is-collapsed { width: auto; }
+.cl-panel.is-collapsed .cl-body { display: none; }
+.cl-panel.is-collapsed .cl-head { border-bottom: 0; border-radius: 6px; }
+.cl-panel.is-collapsed .cl-school { display: none; }
+
+.cl-status, .cl-source { font-size: 12.5px; color: var(--cl-muted); margin: 0 0 10px; }
+.cl-source { margin: 12px 0 0; padding-top: 10px; border-top: 1px solid var(--cl-rule); }
+.cl-source:empty { display: none; }
+
+.cl-start {
+  width: 100%; padding: 8px 12px; border: 0; border-radius: 4px; background: var(--cl-ink); color: #fff; font-weight: 600;
+  transition: background-color 160ms ease-out;
+}
+.cl-start:hover { background: #2c3036; }
+.cl-start:disabled { background: #5d636b; cursor: progress; }
+
 .cl-ask { display: flex; gap: 6px; margin-top: 10px; }
-.cl-ask input { flex: 1; min-width: 0; font: inherit; padding: 4px 6px; border: 1px solid var(--cl-rule); background: #fff; }
-.cl-ask button { font: inherit; padding: 4px 10px; border: 1px solid var(--cl-ink); background: transparent; cursor: pointer; }
-.cl-answer p { margin: 8px 0 0; }
-.cl-rule-head { font-weight: bold; }
-.cl-warn { color: var(--cl-mark); font-size: 12px; }
+.cl-ask input {
+  flex: 1; min-width: 0; font: inherit; padding: 6px 8px; border: 1px solid var(--cl-rule); border-radius: 4px;
+  background: var(--cl-surface); color: var(--cl-ink);
+}
+.cl-ask input::placeholder { color: #6b7179; }
+.cl-ask input:focus-visible { outline: 2px solid var(--cl-mark); outline-offset: 0; border-color: var(--cl-mark); }
+.cl-ask button {
+  padding: 6px 12px; border: 1px solid var(--cl-ink); border-radius: 4px; background: var(--cl-surface); color: var(--cl-ink);
+  font-weight: 600;
+}
+.cl-ask button:hover { background: var(--cl-layer); }
+.cl-ask button:disabled { color: var(--cl-muted); border-color: var(--cl-rule); cursor: progress; }
 
-/* Verdict: computed by code. Typeset like a stamped ruling, so it reads apart from the model's prose. */
-.cl-verdict { --cl-ink: #1c1a17; --cl-mark: #8a2d1c; --cl-rule: #c9bfa8;
-  font: 14px/1.5 Georgia, "Times New Roman", serif; color: var(--cl-ink);
-  border: 1px solid var(--cl-rule); border-left-width: 4px; padding: 6px 10px; margin: 8px 0; background: #fff; }
-.cl-verdict.is-no { border-left-color: var(--cl-mark); }
-.cl-verdict.is-ok { border-left-color: #2f5d3a; }
-.cl-verdict-head { margin: 0; font-weight: bold; letter-spacing: 0.04em; text-transform: uppercase; font-size: 13px; }
-.cl-verdict.is-no .cl-verdict-head { color: var(--cl-mark); }
-.cl-verdict ul { margin: 4px 0; padding-left: 0; list-style: none; }
-.cl-verdict li { margin: 2px 0; }
-.cl-verdict li.is-fail { font-weight: bold; }
-.cl-verdict-rule { font: 12px ui-monospace, Consolas, monospace; color: var(--cl-mark); }
-.cl-verdict-foot { margin: 4px 0 0; font-size: 12px; color: #5f574a; }
-.cl-next-head { margin: 10px 0 0; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: #5f574a; }
-.cl-steps ol { margin: 4px 0 0; padding-left: 20px; }
-.cl-steps li { margin: 4px 0; }
-.cl-check { font: 14px/1.5 Georgia, "Times New Roman", serif; }
+.cl-answer:empty { display: none; }
+.cl-answer { margin-top: 12px; }
+.cl-answer > p { margin: 0 0 8px; }
+.cl-rule-head { font-weight: 650; }
+.cl-warn { color: var(--cl-mark); font-size: 12.5px; }
+
+/* Verdict: computed by code, so it is set apart from anything the model wrote. */
+.cl-verdict { margin: 0 0 10px; border: 1px solid var(--cl-rule); border-radius: 4px; background: var(--cl-surface); overflow: hidden; }
+.cl-verdict-head {
+  display: flex; align-items: center; gap: 8px; margin: 0; padding: 7px 10px; font-weight: 650; font-size: 14px;
+}
+.cl-verdict-head svg { flex: none; width: 16px; height: 16px; }
+.cl-verdict.is-no { border-color: #e2b4a8; }
+.cl-verdict.is-no .cl-verdict-head { background: var(--cl-mark-tint); color: var(--cl-mark); }
+.cl-verdict.is-ok { border-color: #b5d3bf; }
+.cl-verdict.is-ok .cl-verdict-head { background: var(--cl-ok-tint); color: var(--cl-ok); }
+.cl-verdict ul { margin: 0; padding: 8px 10px 0; list-style: none; }
+.cl-verdict li { display: grid; grid-template-columns: 34px 1fr; gap: 6px; margin: 0 0 6px; }
+.cl-verdict li.is-fail { font-weight: 600; }
+.cl-verdict-rule { font-weight: 600; font-size: 12px; color: var(--cl-mark); padding-top: 1px; }
+.cl-verdict-foot { margin: 0; padding: 6px 10px 8px; font-size: 12px; color: var(--cl-muted); }
+
+.cl-next-head { margin: 12px 0 4px; font-size: 13px; font-weight: 650; color: var(--cl-ink); }
+.cl-steps ol { margin: 0; padding-left: 20px; }
+.cl-steps li { margin: 0 0 6px; }
+.cl-steps .cl-ref { margin-left: 4px; vertical-align: 1px; }
+
+/* Instant check under the course table on the page itself. */
+.cl-check { max-width: 62ch; margin: 12px 0 4px; }
+
+@media (max-width: 600px) {
+  .cl-panel { right: 8px; left: 8px; bottom: 8px; width: auto; max-height: 60vh; }
+  .cl-panel.is-collapsed { left: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cl-start { transition: none; }
+}

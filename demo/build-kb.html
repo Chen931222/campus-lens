@@ -6,23 +6,27 @@
 <meta name="robots" content="noindex">
 <title>Rule Builder</title>
 <style>
-  body { margin: 0; font: 15px/1.55 Georgia, "Times New Roman", serif; color: #1c1a17; background: #f4f1ea; }
+  body { margin: 0; font: 15px/1.55 system-ui, "Segoe UI", "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif; color: #17191c; background: #ffffff; }
+  ::selection { background: #f3c9bf; }
+  :focus-visible { outline: 2px solid #b0341c; outline-offset: 2px; }
   main { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
   h1 { font-size: 24px; margin: 0 0 4px; }
-  .sub { margin: 0 0 16px; color: #5f574a; }
+  .sub { margin: 0 0 16px; color: #50565e; max-width: 70ch; }
   details { margin-bottom: 12px; }
-  pre { white-space: pre-wrap; background: #fff; border: 1px solid #c9bfa8; padding: 8px 12px; font: 13px/1.6 "Microsoft JhengHei", sans-serif; }
-  button { font: inherit; padding: 6px 14px; background: #1c1a17; color: #f4f1ea; border: 0; cursor: pointer; }
+  pre { white-space: pre-wrap; background: #f2f3f5; border: 1px solid #d3d7dc; border-radius: 4px; padding: 8px 12px; font: 13px/1.6 "Microsoft JhengHei", sans-serif; }
+  button { font: inherit; font-weight: 600; padding: 8px 16px; background: #17191c; color: #fff; border: 0; border-radius: 4px; cursor: pointer; }
+  button:hover { background: #2c3036; }
   button:disabled { opacity: 0.6; cursor: progress; }
-  #status { color: #5f574a; }
+  #status, #publish-status { color: #50565e; }
+  a { color: #b0341c; text-underline-offset: 3px; }
   table { width: 100%; border-collapse: collapse; margin-top: 12px; background: #fff; }
-  th, td { border: 1px solid #c9bfa8; padding: 6px 8px; vertical-align: top; text-align: left; }
-  th { background: #ece6d8; }
-  tr.bad td { color: #8a2d1c; }
-  tr.ok td { background: #f3f7f1; }
+  th, td { border: 1px solid #d3d7dc; padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: #f2f3f5; font-weight: 600; }
+  tr.bad td { color: #b0341c; }
+  tr.ok td { background: #ecf5ef; }
   td.zh { white-space: pre-wrap; font-family: "Microsoft JhengHei", sans-serif; font-size: 13px; width: 34%; }
-  textarea { width: 100%; box-sizing: border-box; font: inherit; border: 1px solid #c9bfa8; padding: 4px; }
-  td:first-child { font-family: ui-monospace, Consolas, monospace; white-space: nowrap; }
+  textarea { width: 100%; box-sizing: border-box; font: inherit; border: 1px solid #d3d7dc; border-radius: 4px; padding: 6px; }
+  td:first-child { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
   @media (max-width: 700px) { table { font-size: 13px; } }
 </style>
 </head>

@@ -31,6 +31,7 @@ function renderNote(n: Note): void {
   const anchor = anchorFor(n.key);
   if (!anchor) return;
   anchor.querySelector(":scope > .cl-note")?.remove();
+  if (anchor.nextElementSibling?.classList.contains("cl-note")) anchor.nextElementSibling.remove();
   const box = el("aside", "cl-note");
   box.append(el("p", "cl-note-text", n.note));
   if (n.rules.length) {
@@ -60,13 +61,26 @@ function build(): void {
   const panel = el("section", "cl-panel");
   panel.setAttribute("aria-label", "Campus Lens");
   const head = el("header", "cl-head");
-  head.append(el("strong", undefined, "Campus Lens"), el("span", "cl-school", kb.school));
+  const title = el("div", "cl-title");
+  title.append(el("strong", undefined, "Campus Lens"), el("span", "cl-school", kb.school));
+  const toggle = el("button", "cl-toggle", "Hide");
+  toggle.type = "button";
+  toggle.setAttribute("aria-expanded", "true");
+  head.append(title, toggle);
+  const body = el("div", "cl-body");
+  body.id = "cl-body";
+  toggle.setAttribute("aria-controls", body.id);
+  toggle.addEventListener("click", () => {
+    const collapsed = panel.classList.toggle("is-collapsed");
+    toggle.textContent = collapsed ? "Show" : "Hide";
+    toggle.setAttribute("aria-expanded", String(!collapsed));
+  });
   const status = el("p", "cl-status", "Checking the on-device model…");
   const start = el("button", "cl-start", "Explain this page in English");
   start.type = "button";
   const form = el("form", "cl-ask");
   const input = el("input");
-  input.placeholder = "Ask about this page, e.g. can I drop two courses?";
+  input.placeholder = "Ask about this page";
   input.setAttribute("aria-label", "Question");
   const send = el("button", undefined, "Ask");
   send.type = "submit";
@@ -74,7 +88,8 @@ function build(): void {
   const answer = el("div", "cl-answer");
   answer.setAttribute("aria-live", "polite");
   const source = el("p", "cl-source");
-  panel.append(head, status, start, form, answer, source);
+  body.append(status, start, form, answer, source);
+  panel.append(head, body);
   document.body.append(panel);
 
   deviceStatus().then((s) => {
@@ -168,7 +183,9 @@ function build(): void {
     const v = evaluate(courses, ticked);
     const box = el("div", "cl-check");
     box.append(verdictBox(v), stepsBox(courses, v));
-    table.after(box);
+    // Keep the table's own margin note directly under it; the check goes after the note.
+    const note = table.nextElementSibling?.classList.contains("cl-note") ? table.nextElementSibling : null;
+    (note ?? table).after(box);
   });
 }
 
@@ -194,7 +211,9 @@ function stepsBox(courses: Course[], v: Verdict): HTMLElement {
 /** Computed by code from the course table. Shown above the model's words, never replaced by them. */
 function verdictBox(v: Verdict): HTMLElement {
   const box = el("div", `cl-verdict ${v.allowed ? "is-ok" : "is-no"}`);
-  box.append(el("p", "cl-verdict-head", v.allowed ? "Allowed" : "Not allowed"));
+  const head = el("p", "cl-verdict-head");
+  head.append(statusIcon(v.allowed), document.createTextNode(v.allowed ? "Allowed" : "Not allowed"));
+  box.append(head);
   const list = el("ul");
   for (const f of v.findings) {
     const li = el("li", f.ok ? undefined : "is-fail");
@@ -224,17 +243,36 @@ export function mount(): void {
   }
   const note = el("section", "cl-panel");
   note.setAttribute("aria-label", "Campus Lens");
-  const close = el("button", "cl-ask-close", "Close");
+  const head = el("header", "cl-head");
+  const title = el("div", "cl-title");
+  title.append(el("strong", undefined, "Campus Lens"));
+  const close = el("button", "cl-toggle", "Close");
   close.type = "button";
   close.addEventListener("click", () => {
     note.remove();
     w.__campusLens = false;
   });
-  note.append(
-    el("strong", undefined, "Campus Lens"),
-    el("p", "cl-status", "This page is not one Campus Lens has rules for yet. It only reads pages from schools whose regulations have been built and reviewed."),
-    close,
-  );
+  head.append(title, close);
+  const body = el("div", "cl-body");
+  body.append(el("p", "cl-status", "No rules for this page yet. Campus Lens only reads pages from schools whose regulations have been built into English and reviewed."));
+  note.append(head, body);
   document.body.append(note);
 }
 
+
+/** Drawn check / cross, same 1.75 stroke, inheriting the verdict colour. */
+function statusIcon(ok: boolean): SVGSVGElement {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 16 16");
+  svg.setAttribute("aria-hidden", "true");
+  const path = document.createElementNS(ns, "path");
+  path.setAttribute("d", ok ? "M3.5 8.5l3 3 6-7" : "M4.5 4.5l7 7M11.5 4.5l-7 7");
+  path.setAttribute("fill", "none");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "1.75");
+  path.setAttribute("stroke-linecap", "round");
+  path.setAttribute("stroke-linejoin", "round");
+  svg.append(path);
+  return svg;
+}
